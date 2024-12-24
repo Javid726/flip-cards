@@ -1,9 +1,9 @@
 import styles from './Card.module.css';
 import { motion } from 'motion/react';
 import { useState } from 'react';
-import helloMoon from '../../assets/images/Hello Moon.png';
+// import helloMoon from '../../assets/images/Hello Moon.png';
 
-const Card = ({ index }: { index: number }) => {
+const Card = ({ index, back }: { index: number; back: string }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = () => {
@@ -19,7 +19,7 @@ const Card = ({ index }: { index: number }) => {
     >
       <motion.div className={styles.front}>Card {index}</motion.div>
       <motion.div className={styles.back}>
-        <img className={styles.back_image} src={helloMoon} />
+        <img className={styles.back_image} src={back} alt="illustration" />
       </motion.div>
     </motion.div>
   );
