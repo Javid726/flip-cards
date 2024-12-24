@@ -1,25 +1,80 @@
+import { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import styles from './Cards.module.css';
-import { CARDS, CARD_DECK } from '@/constants/constants';
-import { getRandomInt } from '@/lib/utils';
+import { CARDS } from '@/constants/constants';
+
+interface Card {
+  id: string;
+  type: string;
+  front: string;
+  back: string;
+}
 
 const Cards = () => {
-  let max = CARD_DECK / 2;
-  let card_arr = [...CARDS];
+  const [cards, setCards] = useState<Card[]>([]);
+  const [flippedCards, setFlippedCards] = useState<string[]>([]);
+  const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
+
+  const handleCardClick = (cardId: string, cardType: string) => {
+    if (matchedPairs.includes(cardType)) return;
+
+    setFlippedCards(prev => {
+      if (prev.length === 2) return [cardId];
+
+      if (prev.includes(cardId)) return prev;
+
+      return [...prev, cardId];
+    });
+  };
+
+  useEffect(() => {
+    const shuffleCards = () => {
+      const doubledCards = [...CARDS, ...CARDS].map((card, index) => ({
+        ...card,
+        id: `${card.type}-${index}`,
+      }));
+
+      // shuffling
+      return doubledCards
+        .map(card => ({ card, sort: Math.random }))
+        .sort((a: any, b: any) => a.sort - b.sort)
+        .map(({ card }) => card);
+    };
+
+    setCards(shuffleCards());
+  }, []);
+
+  useEffect(() => {
+    if (flippedCards.length === 2) {
+      const [first, second] = flippedCards;
+
+      if (first === second) {
+        setMatchedPairs(prev => [...prev, first]);
+
+        // setTimeout(() => {
+        //   setFlippedCards([]);
+        // }, 1000);
+      } else {
+        setTimeout(() => {
+          setFlippedCards([]);
+        }, 500);
+      }
+    }
+  }, [flippedCards]);
 
   return (
     <div className={styles.card_container}>
-      {Array.from({ length: CARD_DECK }).map((_, index) => {
-        const r = getRandomInt(max);
-        const card = card_arr[r];
-        card_arr.splice(r, 1);
-        max--;
-
-        if (max === 0) {
-          card_arr = [...CARDS];
-          max = CARD_DECK / 2;
-        }
-        return <Card key={index} index={index + 1} back={card?.back} />;
+      {cards.map((card, index) => {
+        return (
+          <Card
+            key={`${card.type}-${index}`}
+            card={card}
+            isFlipped={
+              flippedCards.includes(card.id) || matchedPairs.includes(card.id)
+            }
+            onCardClick={cardType => handleCardClick(card.id, cardType)}
+          />
+        );
       })}
     </div>
   );
