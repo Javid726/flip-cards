@@ -1,8 +1,6 @@
 import styles from './Card.module.css';
 import { motion } from 'motion/react';
-// import { useState } from 'react';
 import pricklyPear from '../../assets/prickly-pear.svg';
-// import helloMoon from '../../assets/images/Hello Moon.png';
 
 interface CardProps {
   card: {
@@ -15,16 +13,9 @@ interface CardProps {
   isFlipped: boolean;
 }
 
-const Card = ({ card, onCardClick, isFlipped = false }: CardProps) => {
-  // const [isFlipped, setIsFlipped] = useState(false);
-  // const [currentCardType, setCurrentCardType] = useState('');
-
+const Card = ({ card, onCardClick, isFlipped }: CardProps) => {
   const handleClick = () => {
     onCardClick(card.type);
-    // const cardType = e.currentTarget.dataset.cardType;
-    // setIsFlipped(prev => !prev);
-    // if (cardType) setCurrentCardType(cardType);
-    // console.log(currentCardType);
   };
 
   return (

@@ -36,7 +36,7 @@ const Cards = () => {
 
       // shuffling
       return doubledCards
-        .map(card => ({ card, sort: Math.random }))
+        .map(card => ({ card, sort: Math.random() }))
         .sort((a: any, b: any) => a.sort - b.sort)
         .map(({ card }) => card);
     };
@@ -47,18 +47,16 @@ const Cards = () => {
   useEffect(() => {
     if (flippedCards.length === 2) {
       const [first, second] = flippedCards;
+      const f = first.split('-')[0];
+      const s = second.split('-')[0];
 
-      if (first === second) {
-        setMatchedPairs(prev => [...prev, first]);
-
-        // setTimeout(() => {
-        //   setFlippedCards([]);
-        // }, 1000);
-      } else {
-        setTimeout(() => {
-          setFlippedCards([]);
-        }, 500);
+      if (f === s) {
+        setMatchedPairs(prev => [...prev, f]);
       }
+
+      setTimeout(() => {
+        setFlippedCards([]);
+      }, 500);
     }
   }, [flippedCards]);
 
@@ -70,7 +68,7 @@ const Cards = () => {
             key={`${card.type}-${index}`}
             card={card}
             isFlipped={
-              flippedCards.includes(card.id) || matchedPairs.includes(card.id)
+              flippedCards.includes(card.id) || matchedPairs.includes(card.type)
             }
             onCardClick={cardType => handleCardClick(card.id, cardType)}
           />
