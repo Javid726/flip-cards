@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Play:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,7 +14,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --card-border: #e5e7eb;
+  --card-border: #000;
   --card-background: #f3f4f6;
 }
 
@@ -29,6 +31,7 @@ body {
   background-color: #fff;
   color: #000;
   font-size: 16px;
+  /* font-family: 'Nunito', Arial, Helvetica, sans-serif; */
 }
 
 @layer base {

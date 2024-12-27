@@ -14,6 +14,7 @@ const Cards = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<string[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
+  const [endGame, setEndGame] = useState(false);
 
   const handleCardClick = (cardId: string, cardType: string) => {
     if (matchedPairs.includes(cardType)) return;
@@ -25,6 +26,10 @@ const Cards = () => {
 
       return [...prev, cardId];
     });
+
+    if (matchedPairs.length === 6) {
+      setEndGame(true);
+    }
   };
 
   useEffect(() => {
