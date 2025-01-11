@@ -6,7 +6,7 @@ import Landing from './pages/Landing';
 function App() {
   return (
     <Router>
-      <section className="bg-[#fcf5eb] h-screen flex justify-center items-center flex-col">
+      <section className="bg-[#fcf5eb] h-screen">
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/game" element={<Cards />} />
